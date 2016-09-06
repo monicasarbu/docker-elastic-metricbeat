@@ -1,4 +1,4 @@
-#!/usr/bin/env ash
+#!/usr/bin/env bash
 
 mkdir -p /metricbeat/config && mkdir -p /metricbeat/data
 

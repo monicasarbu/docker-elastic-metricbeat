@@ -1,19 +1,16 @@
-FROM alpine:3.4
-MAINTAINER Aurélien Thieriot <aurelien@scalar.is>
+FROM ubuntu:14.04
+MAINTAINER Monica Sarbu <monica@elastic.co>
 
-ENV METRICBEAT_VERSION=5.0.0-alpha4
+ENV METRICBEAT_VERSION=5.0.0-alpha6-SNAPSHOT
 
-RUN apk update && \
-    apk add \
-      ca-certificates \
-      curl && \
-    rm -rf /var/cache/apk/*
+RUN apt-get update
+RUN apt-get -y -q install wget
 
-#RUN curl -L -O https://download.elastic.co/beats/metricbeat/metricbeat-${METRICBEAT_VERSION}-linux-x86_64.tar.gz && \
-#    tar -xvvf metricbeat-${METRICBEAT_VERSION}-linux-x86_64.tar.gz && \
-#    mv metricbeat-${METRICBEAT_VERSION}-linux-x86_64/ /etc/metricbeat && \
-#    mv /etc/metricbeat/metricbeat.yml /etc/metricbeat/metricbeat.example.yml && \
-#    mv /etc/metricbeat/metricbeat /bin/metricbeat
+RUN wget https://beats-nightlies.s3.amazonaws.com/metricbeat/metricbeat-${METRICBEAT_VERSION}-linux-x86_64.tar.gz
+RUN tar -xvvf metricbeat-${METRICBEAT_VERSION}-linux-x86_64.tar.gz
+RUN mv metricbeat-${METRICBEAT_VERSION}-linux-x86_64/ /etc/metricbeat
+RUN mv /etc/metricbeat/metricbeat.yml /etc/metricbeat/metricbeat.example.yml
+RUN mv /etc/metricbeat/metricbeat /bin/metricbeat
 
 ADD bin/metricbeat /bin/
 
